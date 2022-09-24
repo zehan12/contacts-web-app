@@ -7,3 +7,5 @@ const  contactScehma = new Schema({
     phoneNumber:{type:String, require:true}
 },{timestamps:true});
 
+
+module.exports =  mongoose.model( "Contact", contactScehma );
