@@ -1,8 +1,8 @@
 import React from "react";
 
-const Hero = () => {
+const Home = () => {
     return (
-        <div className="hero min-h-screen" style={{ backgroundImage: `url("https://placeimg.com/1000/800/arch")` }}>
+        <div className="hero h-screen" style={{ backgroundImage: `url("https://placeimg.com/1000/800/arch")` }}>
             <div className="hero-overlay bg-opacity-60"></div>
             <div className="hero-content text-center text-neutral-content">
                 <div className="max-w-md">
@@ -15,4 +15,4 @@ const Hero = () => {
     )
 }
 
-export default Hero;
+export default Home;

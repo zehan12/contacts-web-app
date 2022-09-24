@@ -6,19 +6,21 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken)
 
 
-router.post( '/', ( req, res, next ) => {
-    try {
+router.post('/', (req, res, next) => {
+   try {
         const { phoneNumber, message } = req.body.phoneNumber;
-        const OTP = Math.floor(1000 + Math.random() * 9000)
-            .create({
-                to: phoneNumber,
+        const OTP = Math.floor(1000 + Math.random() * 9000);
+        console.log(OTP)
+            client.messages.create({
+                to: `+91${phoneNumber}`,
                 from: '+18647341627',
                 body: `${message}.
-                 Hi. Your OTP is : ${OTP}`,
-            })
-        return res.status(200).json({ message: "success",OTP:OTP})
+                 Hi. Your OTP is : ${OTP}`, 
+            }).then((message)=>console.log(message.sid))
+            
+        return res.status(200).json({ message: "success", OTP: OTP })
     }
-    catch (error) {
+   catch (error) {
         return res.status(401).json(error.message)
     }
 })
