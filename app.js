@@ -30,7 +30,8 @@ app.set('view engine', 'ejs');
 app.use(cors());
 
 app.use('/api', require('./server/routes/api'));
-app.use( '/api/contact/', require('./server/routes/contact') );
+app.use( '/api/contact/', require('./server/routes/contact'));
+app.use( '/api/message', require("./server/routes/message"));
 app.use(require('./server/routes/index'));
 
 app.listen(port, () => {
