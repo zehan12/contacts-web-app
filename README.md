@@ -15,7 +15,7 @@ yarn
 Now, you can start a local web server by running:
 
 ```
-yarn dev
+yarn start
 ```
 
 And then open http://localhost:8000 to view it in the browser.
