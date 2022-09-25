@@ -40,5 +40,14 @@ router.post('/', async (req, res, next) => {
 })
 
 
+router.get("/", async( req, res, next ) => {
+    try {
+        const msg = await Message.find();
+        res.status(200).json({msg});
+    } catch (err) {
+        res.status(401).json(err.message)
+    }
+})
+
 
 module.exports = router;

@@ -8,6 +8,7 @@ import ContactForm from './components/ContactForm';
 import ContactDetail from './components/ContactDetail';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import SendMessage from './components/SendMessage';
+import MessageHistory from './components/MessageHistory';
 
 
 function App() {
@@ -16,6 +17,10 @@ function App() {
       <Router>
         <Header />
         <Switch>
+
+        <Route path="/history">
+            <MessageHistory />
+          </Route>
 
           <Route path="/contacts/:id" children={<ContactDetail />} />
 
@@ -29,10 +34,6 @@ function App() {
 
           <Route exact path="/sendmessage/:id" >
             <SendMessage />
-          </Route>
-
-          <Route path="/message/history">
-            <MessageHistory />
           </Route>
 
           <Route exact path="/">

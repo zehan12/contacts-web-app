@@ -27,9 +27,9 @@ const ContactDetail = () => {
         <>
             <h1 className="m-7 text-center">Contact Details Page</h1>
 
-                <div className="h-screen m-7 pt-10">
-         {       contact ?
-                    <div className="border-4 m-auto p-4" style={{width:"30%"}}>
+            <div className="h-screen m-7 pt-10">
+                {contact ?
+                    <div className="border-4 m-auto p-4" style={{ width: "30%" }}>
                         <h2 className="text-3xl text-center p-8">Contact Info</h2>
                         <div className="flex justify-around m-4">
                             <h3>First Name:</h3>
@@ -45,14 +45,19 @@ const ContactDetail = () => {
                         </div>
                         <div className="flex justify-around m-8">
                             <Link to="/contact">
-                            <button className="btn btn-primary">Go Back</button>
-                                </Link>
+                                <button className="btn btn-primary">Go Back</button>
+                            </Link>
+                            <Link to={`/sendmessage/:${contact._id}`}>
+                                <button className="btn border-none bg-green-600" title="send OTP to this contact">
+                                    Sent
+                                </button>
+                            </Link>
                         </div>
                     </div>
                     : <h2 className="text-center text-3xl text-red-600">
                         Contact Info Not Found !!!
                     </h2>
-            }
+                }
             </div>
         </>
 

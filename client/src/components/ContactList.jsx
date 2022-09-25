@@ -21,8 +21,6 @@ const ContactList = () => {
     useEffect(() => {
     }, [contacts])
 
-
-
     const handleDelete = async (id) => {
         console.log(id)
         const res = await fetch(`http://localhost:8000/api/contact/${id}/delete`,{
@@ -30,7 +28,6 @@ const ContactList = () => {
         });
         const data = await res.json();
         if ( res && res.status === 200 ) fetchContacts()
-        console.log(data,res,"----------------------------------------------------------------------------------------------------------------------")   
     }
 
 
