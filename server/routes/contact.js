@@ -12,7 +12,8 @@ router.post("/create", async (req, res, next) => {
     try {
         const { firstName, lastName, phoneNumber } = req.body
         const contact = { firstName, lastName, phoneNumber };
-        const phone = await Contact.find({ phoneNumber: contact.phoneNumber });
+        console.log(contact)
+        const phone = await Contact.findOne({ phoneNumber: contact.phoneNumber });
         if (!phone) {
             const contactCreated = await Contact.create(contact);
             res.status(200).json(contactCreated);
