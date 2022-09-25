@@ -49,7 +49,9 @@ const ContactDetail = () => {
                                 </Link>
                         </div>
                     </div>
-                    : ""
+                    : <h2 className="text-center text-3xl text-red-600">
+                        Contact Info Not Found !!!
+                    </h2>
             }
             </div>
         </>

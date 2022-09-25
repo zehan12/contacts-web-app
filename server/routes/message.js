@@ -1,4 +1,5 @@
 const router = require("express")();
+const Message = require("../models/Message");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -6,21 +7,34 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken)
 
 
-router.post('/', (req, res, next) => {
-   try {
-        const { phoneNumber, message } = req.body.phoneNumber;
-        const OTP = Math.floor(1000 + Math.random() * 9000);
-        console.log(OTP)
-            client.messages.create({
-                to: `+91${phoneNumber}`,
-                from: '+18647341627',
-                body: `${message}.
-                 Hi. Your OTP is : ${OTP}`, 
-            }).then((message)=>console.log(message.sid))
-            
+router.post('/', async (req, res, next) => {
+    let messageCreated = {}
+    try {
+        const { name, phoneNumber, message, OTP } = req.body;
+        const messageData = { name, phoneNumber, message, OTP }
+        messageCreated = await Message.create(messageData)
+        const sent = await client.messages.create({
+            to: `+91${phoneNumber}`,
+            from: "+17124124196",
+            body: message,
+        })
+
+        if (sent.sid) {
+            messageCreated.status = "passed";
+            messageCreated.sid = sent.sid;
+            await messageCreated.save();
+        } else {
+            messageCreated.status = "failed";
+            await messageCreated.save()
+            return res.status(401).json({ message: "something went wrong!!!" })
+        }
         return res.status(200).json({ message: "success", OTP: OTP })
     }
-   catch (error) {
+    catch (error) {
+        if (messageCreated._id) {
+            messageCreated.status = "failed";
+            await messageCreated.save()
+        }
         return res.status(401).json(error.message)
     }
 })

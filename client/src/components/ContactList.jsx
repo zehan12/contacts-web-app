@@ -23,6 +23,18 @@ const ContactList = () => {
 
 
 
+    const handleDelete = async (id) => {
+        console.log(id)
+        const res = await fetch(`http://localhost:8000/api/contact/${id}/delete`,{
+            method:"DELETE",
+        });
+        const data = await res.json();
+        if ( res && res.status === 200 ) fetchContacts()
+        console.log(data,res,"----------------------------------------------------------------------------------------------------------------------")   
+    }
+
+
+
     return (
         <>
             <h1 className="text-center">List of Contact</h1>
@@ -59,26 +71,32 @@ const ContactList = () => {
 
                             <tbody>
                                 {contacts.map((contact) => (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <tr key={contact._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {contact.firstName}
                                         </th>
                                         <td className="py-4 px-6">
-                                            {contact.lastName }
+                                            {contact.lastName}
                                         </td>
                                         <td className="py-4 px-6">
                                             {contact.phoneNumber}
                                         </td>
                                         <td className="py-4 px-6 flex">
                                             <button title="delete this contact">
-                                                <AiTwotoneDelete className="text-2xl hover:text-red-600 cursor-pointer mr-3" />
+                                                <AiTwotoneDelete data-id={contact._id} id={contact._id}
+                                                onClick={() => {
+                                                     handleDelete(contact._id);
+                                                }}
+                                                    className="text-2xl hover:text-red-600 cursor-pointer mr-3" />
                                             </button>
-                                            <button title="send OTP to this contact">
-                                                <GrMail className="text-2xl hover:text-green-600 cursor-pointer" />
-                                            </button>
+                                            <Link to={`/sendmessage/:${contact._id}`}>
+                                                <button title="send OTP to this contact">
+                                                    <GrMail className="text-2xl hover:text-green-600 cursor-pointer" />
+                                                </button>
+                                            </Link>
                                         </td>
                                         <td className="py-4 px-6 ml-3 cursor-pointer">
-                                           <Link to={`/contacts/:${contact._id}`}>view contact</Link>
+                                            <Link to={`/contacts/:${contact._id}`}>view contact</Link>
                                         </td>
                                     </tr>))
                                 }

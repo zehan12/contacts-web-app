@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import  { Redirect, useHistory } from "react-router-dom"
 
 
 const ContactForm = () => {
@@ -6,27 +7,38 @@ const ContactForm = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [error, setError]= useState("")
+    const [error, setError] = useState("")
+    const history = useHistory();
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const contact = { firstName, lastName, phoneNumber }
-        const res = await fetch( "http://localhost:8000/api/contact/create", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(contact)
-        })
-        const data = await res.json();
-        if ( data.message ) return setError(data.message)
-         if ( data ) console.log(data)
+        if (!firstName || !lastName || !phoneNumber) {
+            setError("input cannot be empty!");
+            console.log("invalid")
+        }
+        else if (phoneNumber.length > 10) {
+            setError("Enter Valid Phone Number!")
+        } else {
+            const res = await fetch("http://localhost:8000/api/contact/create", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(contact)
+            })
+            const data = await res.json();
+            if ( res && res.status === 200 ) {
+                console.log(res)
+                history.push("/contact");
 
+            }
+            if (data.message) return setError(data.message)
+        }
     }
-
 
     return (
         <form onSubmit={(e) => handleSubmit(e)} className="m-auto p-20 flex flex-col justify-center items-center">
             <h1>Enter Your Details Here</h1>
-            { error && <h2 className="text-3xl text-red-600">{error}</h2> }
+            {error && <h2 className="text-3xl text-red-600">{error}</h2>}
             <div className="form-control w-full max-w-xs">
                 <label className="label">
                     <span className="label-text text-2xl" >Enter your first name?</span>
@@ -49,7 +61,7 @@ const ContactForm = () => {
                 <label className="label">
                     <span className="label-text text-2xl">Enter  your phone number?</span>
                 </label>
-                <input onChange={e => setPhoneNumber(e.target.value)} type="text" name="phoneNumber" value={phoneNumber} placeholder="Enter your Phone Number" className="input input-bordered w-full max-w-xs" />
+                <input onChange={e => setPhoneNumber(event.target.value.replace(/\D/, ''))} type="text" min="10" max="10" name="phoneNumber" value={phoneNumber} placeholder="Enter your Phone Number" className="input input-bordered w-full max-w-xs" />
                 <label className="label">
                     <span className="label-text-alt">Alt label</span>
                 </label>

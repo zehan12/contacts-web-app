@@ -15,6 +15,7 @@ router.post("/create", async (req, res, next) => {
         console.log(contact)
         const phone = await Contact.findOne({ phoneNumber: contact.phoneNumber });
         if (!phone) {
+            console.log("here")
             const contactCreated = await Contact.create(contact);
             res.status(200).json(contactCreated);
         } else {
@@ -49,9 +50,10 @@ router.get( "/:id/view", async( req, res, next ) => {
 router.delete( "/:id/delete",  async( req, res, next ) => {
     try {
         const id = req.params.id
+        console.log(id)
         const contact =  await Contact.findByIdAndDelete(id);
-        if ( contact ) res.json({message:"contact deleted"});
-        if ( !contact ) res.json({message:"contact not deleted"})
+        if ( contact ) res.status(200).json({message:"contact deleted"});
+        if ( !contact ) res.status(401).json({message:"contact not deleted"})
     } catch ( error ) {
         console.log(error)
         return next(error)

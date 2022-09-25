@@ -11,8 +11,8 @@ const Header = () => {
               <a href="#" className="font-bold text-xl text-indigo-600">Kisan Network</a>
             </div>
             <div className="flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
-              <NavLink to="/"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Home</NavLink>
-              <Link to="/contact"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Contacts</Link>
+              <NavLink exact to="/"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Home</NavLink>
+              <NavLink to="/contact"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Contacts</NavLink>
               <NavLink to="/create"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Create Contact</NavLink>
               <NavLink to="/history"  className="p-2 lg:px-4 md:mx-2 text-black rounded " activeClassName="bg-green-500 text-white">Message History</NavLink>
             </div>
