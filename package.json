@@ -12,6 +12,11 @@
     "prettier:fix": "prettier . --write",
     "format": "npm run prettier:fix && npm run lint:fix"
   },
+
+  "engines": {
+    "npm":"~6.14.17"
+  },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
